@@ -1,6 +1,12 @@
 ---
 import BaseLayout from "./BaseLayout.astro";
 import TagList from "../components/TagList.astro";
+import BlogPostNav from "../components/BlogPostNav.astro";
+
+interface PostNavItem {
+  slug: string;
+  title: string;
+}
 
 interface Props {
   title: string;
@@ -8,9 +14,11 @@ interface Props {
   pubDate: Date;
   updatedDate?: Date;
   tags: string[];
+  prev?: PostNavItem;
+  next?: PostNavItem;
 }
 
-const { title, description, pubDate, updatedDate, tags } = Astro.props;
+const { title, description, pubDate, updatedDate, tags, prev, next } = Astro.props;
 
 const fmt = new Intl.DateTimeFormat("en", {
   year: "numeric",
@@ -31,5 +39,6 @@ const fmt = new Intl.DateTimeFormat("en", {
     <div class="prose">
       <slot />
     </div>
+    <BlogPostNav prev={prev} next={next} />
   </article>
 </BaseLayout>

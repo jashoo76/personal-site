@@ -1,0 +1,43 @@
+---
+interface PostNavItem {
+  slug: string;
+  title: string;
+}
+
+interface Props {
+  prev?: PostNavItem;
+  next?: PostNavItem;
+}
+
+const { prev, next } = Astro.props;
+const base = import.meta.env.BASE_URL;
+---
+
+<nav class="post-nav" aria-label="Blog post pagination">
+  {
+    prev ? (
+      <a class="post-nav__link post-nav__link--prev" href={`${base}blog/${prev.slug}/`}>
+        <span class="post-nav__arrow" aria-hidden="true">←</span>
+        <span class="post-nav__text">
+          <span class="post-nav__label">Previous</span>
+          <span class="post-nav__title">{prev.title}</span>
+        </span>
+      </a>
+    ) : (
+      <span class="post-nav__spacer" />
+    )
+  }
+  {
+    next ? (
+      <a class="post-nav__link post-nav__link--next" href={`${base}blog/${next.slug}/`}>
+        <span class="post-nav__text">
+          <span class="post-nav__label">Next</span>
+          <span class="post-nav__title">{next.title}</span>
+        </span>
+        <span class="post-nav__arrow" aria-hidden="true">→</span>
+      </a>
+    ) : (
+      <span class="post-nav__spacer" />
+    )
+  }
+</nav>
