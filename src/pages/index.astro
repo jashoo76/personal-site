@@ -1,0 +1,65 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import { siteConfig } from "../config/site";
+import { getCollection } from "astro:content";
+
+const projects = await getCollection("projects");
+const featured = projects
+  .filter((p) => p.data.featured)
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 3);
+
+const blogPosts = await getCollection("blog", ({ data }) => !data.draft);
+const latestPosts = blogPosts
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+
+const fmt = new Intl.DateTimeFormat("en", { dateStyle: "medium" });
+---
+
+<BaseLayout>
+  <section class="container hero">
+    <p class="hero__eyebrow">{siteConfig.title}</p>
+    <h1>{siteConfig.name}</h1>
+    <p class="hero__lead">{siteConfig.bio}</p>
+    <div class="social-links">
+      <a href={siteConfig.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href={siteConfig.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="section-title">
+      <h2>Featured projects</h2>
+      <a href={`${import.meta.env.BASE_URL}projects/`}>All projects →</a>
+    </div>
+    <div class="card-grid">
+      {
+        featured.map((project) => (
+          <ProjectCard {...project.data} />
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="section-title">
+      <h2>Recent writing</h2>
+      <a href={`${import.meta.env.BASE_URL}blog/`}>Archive →</a>
+    </div>
+    <ul class="blog-list">
+      {
+        latestPosts.map((post) => (
+          <li>
+            <a class="title" href={`${import.meta.env.BASE_URL}blog/${post.id}/`}>
+              {post.data.title}
+            </a>
+            <p class="excerpt">{post.data.description}</p>
+            <p class="card__meta">{fmt.format(post.data.pubDate)}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</BaseLayout>

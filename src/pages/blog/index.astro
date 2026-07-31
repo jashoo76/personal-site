@@ -1,0 +1,58 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import TagList from "../../components/TagList.astro";
+import { getCollection } from "astro:content";
+
+const allPosts = await getCollection("blog", ({ data }) => !data.draft);
+const activeTag = Astro.url.searchParams.get("tag");
+
+const posts = allPosts
+  .filter((post) => !activeTag || post.data.tags.includes(activeTag))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const tags = [...new Set(allPosts.flatMap((p) => p.data.tags))].sort();
+
+const fmt = new Intl.DateTimeFormat("en", { dateStyle: "medium" });
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout title="Blog" description="Notes on embedded software, firmware, and hardware.">
+  <div class="container page-header">
+    <h1>Blog</h1>
+    <p>Longer-form notes with syntax-highlighted C, Rust, and assembly snippets.</p>
+    {
+      tags.length > 0 && (
+        <nav class="filter-bar" aria-label="Filter by tag">
+          <a class:list={["tag", !activeTag && "is-active"]} href={`${base}blog/`}>
+            all
+          </a>
+          {tags.map((tag) => (
+            <a
+              class:list={["tag", activeTag === tag && "is-active"]}
+              href={`${base}blog/?tag=${encodeURIComponent(tag)}`}
+            >
+              {tag}
+            </a>
+          ))}
+        </nav>
+      )
+    }
+  </div>
+  <div class="container">
+    <ul class="blog-list">
+      {
+        posts.map((post) => (
+          <li>
+            <a class="title" href={`${base}blog/${post.id}/`}>
+              {post.data.title}
+            </a>
+            <p class="excerpt">{post.data.description}</p>
+            <p class="card__meta">{fmt.format(post.data.pubDate)}</p>
+            {post.data.tags.length > 0 && <TagList tags={post.data.tags} />}
+          </li>
+        ))
+      }
+    </ul>
+    {posts.length === 0 && <p class="hero__lead">No posts for this tag yet.</p>}
+  </div>
+</BaseLayout>

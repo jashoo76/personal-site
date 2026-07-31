@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-label="Motor control block diagram">
+  <rect width="640" height="360" fill="#161a22"/>
+  <rect x="24" y="140" width="120" height="80" rx="4" fill="#12151c" stroke="#2a3140"/>
+  <text x="84" y="185" text-anchor="middle" fill="#8b95a8" font-family="monospace" font-size="14">Current</text>
+  <rect x="180" y="120" width="140" height="120" rx="4" fill="#12151c" stroke="#3dd6c6"/>
+  <text x="250" y="185" text-anchor="middle" fill="#e6eaf0" font-family="monospace" font-size="14">FOC loop</text>
+  <rect x="356" y="140" width="120" height="80" rx="4" fill="#12151c" stroke="#2a3140"/>
+  <text x="416" y="185" text-anchor="middle" fill="#8b95a8" font-family="monospace" font-size="14">PWM</text>
+  <rect x="512" y="148" width="104" height="64" rx="4" fill="#12151c" stroke="#2a3140"/>
+  <text x="564" y="185" text-anchor="middle" fill="#8b95a8" font-family="monospace" font-size="13">Motor</text>
+  <path d="M144 180 H180 M320 180 H356 M476 180 H512" stroke="#3dd6c6" stroke-width="2"/>
+  <path d="M564 148 V100 H250 V120" stroke="#e8b84a" stroke-width="2" fill="none"/>
+  <text x="400" y="92" fill="#e8b84a" font-family="monospace" font-size="12">CAN telemetry</text>
+</svg>

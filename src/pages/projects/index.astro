@@ -1,0 +1,25 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ProjectCard from "../../components/ProjectCard.astro";
+import { getCollection } from "astro:content";
+
+const projects = await getCollection("projects");
+const sorted = projects.sort(
+  (a, b) => a.data.order - b.data.order || a.data.title.localeCompare(b.data.title),
+);
+---
+
+<BaseLayout title="Projects" description="Embedded systems and firmware projects.">
+  <div class="container page-header">
+    <h1>Projects</h1>
+    <p>
+      Firmware, bring-up, and tooling. Add a Markdown file under{" "}
+      <code>src/content/projects/</code> to publish a new card — no HTML edits required.
+    </p>
+  </div>
+  <div class="container card-grid">
+    {sorted.map((project) => (
+      <ProjectCard {...project.data} />
+    ))}
+  </div>
+</BaseLayout>

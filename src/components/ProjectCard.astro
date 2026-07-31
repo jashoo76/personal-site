@@ -1,0 +1,42 @@
+---
+import TagList from "./TagList.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  tech: string[];
+  github: string;
+  image?: string;
+  imageAlt?: string;
+}
+
+const { title, description, tech, github, image, imageAlt } = Astro.props;
+const withBase = (path: string) => import.meta.env.BASE_URL + path.replace(/^\//, "");
+---
+
+<article class="card">
+  {
+    image && (
+      <img
+        class="card__thumb"
+        src={image.startsWith("http") ? image : withBase(image)}
+        alt={imageAlt ?? `${title} diagram`}
+        loading="lazy"
+        width="640"
+        height="360"
+      />
+    )
+  }
+  <h3>
+    <a href={github} target="_blank" rel="noopener noreferrer">
+      {title}
+    </a>
+  </h3>
+  <p>{description}</p>
+  <TagList tags={tech} />
+  <div class="card__links">
+    <a href={github} target="_blank" rel="noopener noreferrer">
+      GitHub →
+    </a>
+  </div>
+</article>

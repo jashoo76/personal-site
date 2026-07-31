@@ -1,0 +1,44 @@
+---
+import ThemeToggle from "./ThemeToggle.svelte";
+import { siteConfig } from "../config/site";
+
+const nav = [
+  { href: "/", label: "Home" },
+  { href: "/projects/", label: "Projects" },
+  { href: "/blog/", label: "Blog" },
+];
+
+const pathname = Astro.url.pathname;
+const base = import.meta.env.BASE_URL;
+
+function navHref(href: string) {
+  if (href === "/") return base;
+  return base + href.replace(/^\//, "");
+}
+
+function isCurrent(href: string) {
+  const target = navHref(href);
+  if (href === "/") {
+    return pathname === target || pathname === base.slice(0, -1);
+  }
+  return pathname.startsWith(target);
+}
+---
+
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="logo" href={navHref("/")}>
+      ~/ <span>{siteConfig.name.split(" ")[0].toLowerCase()}</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      {
+        nav.map((item) => (
+          <a href={navHref(item.href)} aria-current={isCurrent(item.href) ? "page" : undefined}>
+            {item.label}
+          </a>
+        ))
+      }
+      <ThemeToggle client:load />
+    </nav>
+  </div>
+</header>

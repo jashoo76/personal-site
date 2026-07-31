@@ -1,0 +1,35 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import TagList from "../components/TagList.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  pubDate: Date;
+  updatedDate?: Date;
+  tags: string[];
+}
+
+const { title, description, pubDate, updatedDate, tags } = Astro.props;
+
+const fmt = new Intl.DateTimeFormat("en", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+---
+
+<BaseLayout title={title} description={description}>
+  <article class="container page-header">
+    <p class="hero__eyebrow">Blog</p>
+    <h1>{title}</h1>
+    <p class="card__meta">
+      {fmt.format(pubDate)}
+      {updatedDate && ` · updated ${fmt.format(updatedDate)}`}
+    </p>
+    {tags.length > 0 && <TagList tags={tags} />}
+    <div class="prose">
+      <slot />
+    </div>
+  </article>
+</BaseLayout>
