@@ -438,6 +438,12 @@ pre {
   pointer-events: none;
 }
 
+@media (max-width: 768px) {
+  .section-block:not(.section-block--first) .section-title::before {
+  width: 90%;
+  }
+}
+
 .section-block:not(.section-block--first) {
   padding-top: 0;
   margin-top: calc(var(--row-height) * 2);
@@ -681,4 +687,100 @@ pre {
     justify-content: flex-start;
     flex-direction: row-reverse;
   }
+}
+
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 20;
+}
+
+.nav-toggle__bar {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: currentColor;
+  border-radius: 1px;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+/* Animate into an "X" when open */
+.nav-toggle[aria-expanded="true"] .nav-toggle__bar:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.nav-toggle[aria-expanded="true"] .nav-toggle__bar:nth-child(2) {
+  opacity: 0;
+}
+.nav-toggle[aria-expanded="true"] .nav-toggle__bar:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Lock background scroll while menu is open */
+body.nav-open-lock {
+  overflow: hidden;
+}
+
+.nav--mobile {
+  display: none; /* hidden entirely on desktop */
+}
+
+@media (max-width: 768px) {
+  .nav-toggle {
+    display: flex;
+  }
+
+  .nav--desktop {
+    display: none;
+  }
+
+  nav.nav--mobile {
+  box-sizing: border-box;   /* ← critical: makes padding count INSIDE the 100% width, not added on top */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  position: fixed;
+  top: var(--header-height, 4rem);
+  left: 0;
+  gap: 1.5rem;
+  padding: 0 2rem;
+  background: var(--bg-card);
+  box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.25);
+
+  max-height: 0;
+  overflow-y: auto;
+  visibility: hidden;
+  transition: max-height 0.35s ease, padding 0.35s ease, visibility 0s linear 0.35s;
+  z-index: 5;
+}
+
+  nav.nav--mobile.nav--open {
+    max-height: 32rem;
+    padding: 2rem;
+    visibility: visible;
+    transition: max-height 0.35s ease, padding 0.35s ease, visibility 0s linear;
+    opacity: 98%;
+  }
+
+  nav.nav--mobile a {
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+body.nav-open-lock {
+  overflow: hidden;
 }

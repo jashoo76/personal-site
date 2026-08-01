@@ -30,7 +30,20 @@ function isCurrent(href: string) {
     <a class="logo" href={navHref("/")}>
       ~/ <span>{siteConfig.name.split(" ")[0].toLowerCase()}</span>
     </a>
-    <nav class="nav" aria-label="Main">
+
+    <button
+      class="nav-toggle"
+      aria-expanded="false"
+      aria-controls="primary-nav"
+      aria-label="Toggle navigation menu"
+    >
+      <span class="nav-toggle__bar"></span>
+      <span class="nav-toggle__bar"></span>
+      <span class="nav-toggle__bar"></span>
+    </button>
+
+    <!-- desktop nav stays here, unchanged -->
+    <nav class="nav nav--desktop" aria-label="Main">
       {
         nav.map((item) => (
           <a href={navHref(item.href)} aria-current={isCurrent(item.href) ? "page" : undefined}>
@@ -42,3 +55,42 @@ function isCurrent(href: string) {
     </nav>
   </div>
 </header>
+
+<!-- mobile nav panel now lives OUTSIDE .site-header entirely -->
+<nav class="nav nav--mobile" id="primary-nav" aria-label="Main">
+  {
+    nav.map((item) => (
+      <a href={navHref(item.href)} aria-current={isCurrent(item.href) ? "page" : undefined}>
+        {item.label}
+      </a>
+    ))
+  }
+  <ThemeToggle client:load />
+</nav>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>(".nav-toggle");
+  const nav = document.querySelector<HTMLElement>("#primary-nav");
+
+  toggle?.addEventListener("click", () => {
+    const isOpen = nav?.classList.toggle("nav--open");
+    toggle.setAttribute("aria-expanded", String(!!isOpen));
+    document.body.classList.toggle("nav-open-lock", !!isOpen);
+  });
+
+  nav?.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      nav.classList.remove("nav--open");
+      toggle?.setAttribute("aria-expanded", "false");
+      document.body.classList.remove("nav-open-lock");
+    });
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && nav?.classList.contains("nav--open")) {
+      nav.classList.remove("nav--open");
+      toggle?.setAttribute("aria-expanded", "false");
+      document.body.classList.remove("nav-open-lock");
+    }
+  });
+</script>
