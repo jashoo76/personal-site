@@ -24,19 +24,18 @@ const base = import.meta.env.BASE_URL;
     </div>
     <div class="container">
       <ul class="blog-list">
-        {
-          posts.map((post) => (
-            <li>
-              <a class="title" href={`${base}blog/${post.id}/`}>
-                {post.data.title}
-              </a>
-              <p class="excerpt">{post.data.description}</p>
-              <p class="card__meta">{fmt.format(post.data.pubDate)}</p>
-              {post.data.tags.length > 0 && <TagList tags={post.data.tags} />}
-            </li>
-          ))
-        }
-      </ul>
+      {
+        posts.map((post) => (
+          <li>
+            <a class="title" href={`${import.meta.env.BASE_URL}blog/${post.id}/`}>
+              {post.data.title}
+            </a>
+            <p class="excerpt">{post.data.description}</p>
+            <p class="card__meta">{fmt.format(post.data.pubDate)}</p>
+          </li>
+        ))
+      }
+    </ul>
       {posts.length === 0 && <p class="hero__lead">No posts for this tag yet.</p>}
     </div>
   </div>
