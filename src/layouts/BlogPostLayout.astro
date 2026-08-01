@@ -28,19 +28,21 @@ const fmt = new Intl.DateTimeFormat("en", {
 ---
 
 <BaseLayout title={title} description={description}>
-  <article class="container post-header">
-    <p class="blog-post--eyebrow">Blog</p>
-    <h1>{title}</h1>
-    <p class="card__meta">
-      {fmt.format(pubDate)}
-      {updatedDate && ` · updated ${fmt.format(updatedDate)}`}
-    </p>
-    <div class="post-tags--wrapper">
-      {tags.length > 0 && <TagList tags={tags} />}
-    </div>
-    <div class="prose">
-      <slot />
-    </div>
-    <BlogPostNav prev={prev} next={next} />
-  </article>
+  <div class="blog-page">
+    <article class="container post-header">
+      <p class="blog-post--eyebrow">Blog</p>
+      <h1>{title}</h1>
+      <p class="card__meta">
+        {fmt.format(pubDate)}
+        {updatedDate && ` · updated ${fmt.format(updatedDate)}`}
+      </p>
+      <div class="post-tags--wrapper">
+        {tags.length > 0 && <TagList tags={tags} />}
+      </div>
+      <div class="prose">
+        <slot />
+      </div>
+      <BlogPostNav prev={prev} next={next} />
+    </article>
+</div>
 </BaseLayout>

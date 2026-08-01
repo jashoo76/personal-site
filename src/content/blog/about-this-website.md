@@ -1,7 +1,7 @@
 ---
-title: "Static allocation patterns for FreeRTOS tasks"
-description: "Why I reach for StaticTask_t + stack buffers on RAM-constrained MCUs, with a small helper macro."
-pubDate: 2026-01-08
+title: "Welcome to my website!"
+description: "Thank you for visiting :) In this post I share insights and plans about this place - my personal website."
+pubDate: 2026-08-01
 tags:
   - freertos
   - rtos
