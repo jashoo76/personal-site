@@ -5,12 +5,15 @@ interface Props {
   title: string;
   description: string;
   tech: string[];
-  github: string;
+  link: string;
+  prompt: string;
   image?: string;
   imageAlt?: string;
+  video?: string;
+  videoAlt?: string;
 }
 
-const { title, description, tech, github, image, imageAlt } = Astro.props;
+const { title, description, tech, link, prompt, image, imageAlt, video, videoAlt } = Astro.props;
 const withBase = (path: string) => import.meta.env.BASE_URL + path.replace(/^\//, "");
 ---
 
@@ -27,16 +30,31 @@ const withBase = (path: string) => import.meta.env.BASE_URL + path.replace(/^\//
       />
     )
   }
+  {
+    video && (
+      <video
+        class="card__thumb"
+        src={video.startsWith("http") ? video : withBase(video)}
+        width="640"
+        height="360"
+        controls
+        muted
+        loop
+        playsinline
+        aria-label={videoAlt ?? `${title} preview`}
+      />
+    )
+  }
   <h3>
-    <a href={github} target="_blank" rel="noopener noreferrer">
+    <a href={link} target="_blank" rel="noopener noreferrer">
       {title}
     </a>
   </h3>
   <TagList tags={tech} />
   <p>{description}</p>
   <div class="card__links">
-    <a href={github} target="_blank" rel="noopener noreferrer">
-      GitHub →
+    <a href={link} target="_blank" rel="noopener noreferrer">
+      {prompt}
     </a>
   </div>
 </article>

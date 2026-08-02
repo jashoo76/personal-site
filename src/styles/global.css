@@ -99,6 +99,12 @@ img {
   display: block;
 }
 
+video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
 a {
   color: var(--link);
   text-decoration-thickness: 1px;
