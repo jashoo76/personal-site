@@ -93,4 +93,17 @@ function isCurrent(href: string) {
       document.body.classList.remove("nav-open-lock");
     }
   });
+
+  document.addEventListener("click", (e) => {
+    if (!nav?.classList.contains("nav--open")) return;
+
+    const clickedInsideNav = nav.contains(e.target as Node);
+    const clickedToggle = toggle?.contains(e.target as Node);
+
+    if (!clickedInsideNav && !clickedToggle) {
+      nav.classList.remove("nav--open");
+      toggle?.setAttribute("aria-expanded", "false");
+      document.body.classList.remove("nav-open-lock");
+    }
+  });
 </script>
