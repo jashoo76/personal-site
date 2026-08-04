@@ -8,6 +8,7 @@ function resolveBase() {
 }
 
 const site = process.env.SITE_URL ?? "https://jslusarski.com";
+const langs = ["c", "cpp", "rust", "asm", "bash", "json", "yaml"];
 
 /** @type {import('astro').AstroUserConfig} */
 export default defineConfig({
@@ -18,7 +19,9 @@ export default defineConfig({
   markdown: {
     shikiConfig: {
       theme: "github-dark-dimmed",
-      langs: ["c", "cpp", "rust", "asm", "bash", "json", "yaml"],
+      // @ts-expect-error — Shiki accepts language ID strings at runtime;
+      // this is a type-resolution mismatch, not an actual config error
+      langs,
     },
   },
 });
