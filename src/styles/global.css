@@ -24,7 +24,7 @@
 :root[data-theme="light"] {
   color-scheme: light;
   
-  --bg: #f4f6f9;
+  --bg: #fdfff7;
   --bg-elevated: #ffffff;
   --bg-card: #ffffff;
   --bg-footer: #000000;
@@ -95,8 +95,9 @@ body {
 
 img {
   max-width: 100%;
-  height: auto;
   display: block;
+  height: 100%;
+  margin: auto;
 }
 
 video {
@@ -329,9 +330,12 @@ pre {
   border-radius: 4px;
   border: 1px solid var(--border-strong);
   margin-bottom: var(--space-sm);
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
+  object-fit: fill;
   background: var(--bg-elevated);
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: auto;
 }
 
 .page-header {
@@ -473,6 +477,10 @@ pre {
 
 .section-title > a:hover {
   color: var(--accent);
+}
+
+.project-description {
+  white-space: pre-line;
 }
 
 .prose {

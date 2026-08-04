@@ -25,8 +25,6 @@ const withBase = (path: string) => import.meta.env.BASE_URL + path.replace(/^\//
         src={image.startsWith("http") ? image : withBase(image)}
         alt={imageAlt ?? `${title} diagram`}
         loading="lazy"
-        width="640"
-        height="360"
       />
     )
   }
@@ -35,8 +33,6 @@ const withBase = (path: string) => import.meta.env.BASE_URL + path.replace(/^\//
       <video
         class="card__thumb"
         src={video.startsWith("http") ? video : withBase(video)}
-        width="640"
-        height="360"
         controls
         muted
         loop
@@ -51,7 +47,7 @@ const withBase = (path: string) => import.meta.env.BASE_URL + path.replace(/^\//
     </a>
   </h3>
   <TagList tags={tech} />
-  <p>{description}</p>
+  <p class="project-description">{description}</p>
   <div class="card__links">
     <a href={link} target="_blank" rel="noopener noreferrer">
       {prompt}
