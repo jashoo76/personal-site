@@ -489,6 +489,7 @@ pre {
   padding: var(--row-height);
   border-radius: var(--radius);
   background-color: var(--bg-card);
+  border: 1px solid var(--border-strong);
 }
 
 .prose :global(h2) {
@@ -572,7 +573,7 @@ pre {
 }
 
 .blog-page {
-  min-height: 80dvh;
+  min-height: 85dvh;
 }
 
 .post-header {
